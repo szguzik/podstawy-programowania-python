@@ -1,0 +1,198 @@
+python -m venv venv
+
+Linux/Mac
+source venv/bin/activate
+
+Windows
+.\venv\Scripts\activate
+W przypadku błędu:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+
+Zmiana terminala VSCode 
+ctrl+shift+p 
+=> domyślny terminal
+=> wybór terminala (cmd dla windows)
+
+Zadanie:
+# Stworzenie kalkulatora na podstawie wyboru działania
+# 1. uruchamianie programu
+# 2. podanie wartosci (a,b) - zmiennoprzecinkowe
+# 3. wybranie działania
+#     a. dodawanie
+#     b. odejmowanie
+#     c. mnozenie
+#     d. dzielenie
+#     e. modulo
+#     f. potegowanie
+# 4. pokazanie wyniku
+
+
+GIT
+https://git-scm.com/
+https://git-scm.com/download/win
+https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe
+
+---------------------------------------------
+KONFIGURACJA UŻYTKOWNIKA GITA
+---------------------------------------------
+// Ustawianie nazwy użytkownika oraz adresu email
+git config --global user.name "Jan Kowalski"
+git config --global user.email "youremail@domain.com"
+
+---------------------------------------------
+KLONOANIE PROJEKTU (bez klucza, lub uczestnikow repo jest tylko do odczytyu)
+---------------------------------------------
+git clone <link_do_repozytorium>
+np: git clone git@github.com:szguzik/nuxt3-project-for-students-empty.git
+
+// Ustawienie domyslnego brancha main
+git config --global init.defaultBranch main
+
+// Wyswietla bieżącą konfigurację gita
+git config --list
+
+--------------------------------------------
+DODAWANIE / EDYCJA / USUWANIE REPOZYTORIUM DO PROJEKTU
+--------------------------------------------
+
+// Inicjalizacja repozytorium
+git init
+
+// Dodaje do indexu wszystkie nowe, zmienione, usunięte pliki 
+// w bieżącym jego katalogu i wszystkich jego podkatalogach
+git add .  
+
+// Dodaje do indexu wszystkie nowe, zmienione, usunięte pliki w całym repozytorium
+git add -A
+
+// Dodaje do indexu plik README.md
+git add README.md
+
+// Zatwierdza zmiany opisane wiadomością "first commit" - oczywiście treść wiadomości 
+// można dowolnie modyfikować
+git commit -m "first commit"
+
+// Zmienia nazwę bieżącej gałęzi na "main". Flaga -M nadpisuje gałąź o nazwie main 
+git branch -M main
+
+// Dodaje zdalne repozytorium o nazwie "origin" z adresem URL
+// origin - jest "umownym" słowem
+// Projekt może posiadać więcej niż jedno repozytorium.
+// Rozróżniamy je za pomocą nazwy (np. origin i origin2)
+// !!! ADRES REPOZYTORIUM NALEŻY PODMIENIĆ !!!! 
+git remote add origin http://github.com/szguzik/empty-project.git
+git remote add origin2 http://github.com/szguzik/empty-project-2.git
+
+// Sprawdzanie jakie sa zdalne repozytoria
+git remote
+
+// Sprawdzanie jakie sa zdalne repozytoria wraz z adresami
+git remote -v
+
+// Zmiana adresu repozytorium
+git remote set-url origin {newurl}
+np. git remote set-url origin http://github.com/szguzik/empty-project-2.git
+
+// Usuwanie zdalnego repozytorium
+git remote remove <name>
+np. git remote remove origin
+
+--------------------------------------------
+PODSTAWOWE POLECENIA
+--------------------------------------------
+
+// Wysyłanie zmian z gałęzi lokalnej "main" 
+// do gałęzi (o tej samej nazwie) na zdalnym repozytorium np. origin
+git push origin main
+// flaga -u ustawia śledzenie zdalnej gałęzi
+git push origin -u main
+
+// Tworzy nową gałąź o nazwie "develop", ale nie przełącza się na nią.
+git branch develop
+
+// Tworzy nową gałąź o nazwie "nowa_galaz" i od razu przełącza się na nią (flaga -b).
+git checkout -b nowa_galaz
+
+// Pobiera zmiany z gałęzi "main" zdalnego repozytorium o nazwie "origin" 
+// i łączy je z bieżącą gałęzią lokalnie.
+git pull origin main
+
+// Pobiera zmiany z gałęzi zdalnego repozytorium, 
+// która jest skonfigurowana jako "upstream" dla bieżącej gałęzi, 
+// i łączy je z bieżącą gałęzią lokalnie.
+// "upstream" - oznacza, że gałąź ta ma skojarzone repozytorium
+// i gałąź, z której można pobierać aktualizacje.
+// Odnosi się więc do głównego repozytorium, od którego pochodzi Twój "fork"
+// "fork" - kopia repozytorium. Pozwala na swobodne eksperymentowanie 
+// ze zmianami bez wpływu na oryginalne repozytorium
+git pull
+
+// Pobieranie zmian ze zdalnego repozytorium develop
+git pull origin develop
+
+// Przegląd listy commitów
+git log
+
+// Przełącza bieżące repozytorium na gałąź o nazwie develop
+git checkout develop
+
+//:::::::::::::::Cofanie zmian:::::::::::::::
+
+// Tworzy nowy commit, który odwraca zmiany wprowadzone przez commit o podanym HASH
+// Jest to bezpieczna metoda bo nie modyfikuje historii
+git revert HASH
+np. git revert 09gdf09gdf7gd90g7d09fg
+
+// Cofanie kilku commitów 
+git revert OLDEST_HASH^..NEWEST_HASH
+np. git revert a6b4c97e5c807d1f6003d7d920ca7ddc5c1adc32^..9f6e687b020586e2c3d0212c11e57a02e39d1f16
+
+// Dodanie flagi --hard - przywróci stan repozytorium do "momentu" wskazanego commita
+// Nie jest to zalecana metoda ponieważ usuwa historię
+git revert --hard HASH
+np. git revert --hard 09gdf09gdf7gd90g7d09fg
+
+//:::::::::::::::Porównanie:::::::::::::::
+git revert: Stwórz nowy commit, który odwraca zmiany z innego commitu, ale zachowuje historię.
+git reset --hard: Wróć do wcześniejszego commitu, usuwając commity i ich historię.
+
+//:::::::::::::::Schowek:::::::::::::::
+
+// Jeśli masz w trakcie jakieś niezakommitowane zmiany i chcesz je tymczasowo schować
+git stash
+
+// Aby zobaczyć listę wszystkich zapisanych zmian:
+git stash list
+
+// Jeśli chcesz przywrócić zmiany z ostatniego schowka
+git stash apply
+
+// Aby przywrócić zmiany z konkretnego schowka
+git stash apply stash@{n}
+
+// Jeśli chcesz usunąć konkretny schowek bez przywracania zmian:
+git stash pop stash@{n}
+
+// Jeśli chcesz usunąć konkretny schowek bez przywracania zmian:
+git stash drop
+
+// Jeśli chcesz wyczyścić całą listę schowków
+git stash clear
+
+// Jeśli chcesz dodać krótki opis do Twojego schowka:
+git stash save "wiadomość"
+
+//:::::::::::::::Status:::::::::::::::
+// Sprawdzanie niezakomitowanych zmian
+git status
+
+
+
+
+
+
+
+
+
+
+
